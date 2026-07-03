@@ -33,7 +33,7 @@ public class ReservaServiceImpl implements ReservaService {
 		
 		validarConflitoHorario(reserva);
 		
-		validarConflitoHorario(reserva);
+		validarHorario(reserva);
 		
 		return reservaRepository.save(reserva);
 	}
