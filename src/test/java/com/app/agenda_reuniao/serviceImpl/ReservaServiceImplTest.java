@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.app.agenda_reuniao.exception.ConflitoHorarioException;
+import com.app.agenda_reuniao.exception.HorarioInvalidoException;
 import com.app.agenda_reuniao.models.Reserva;
 import com.app.agenda_reuniao.models.Sala;
 import com.app.agenda_reuniao.repository.ReservaRepository;
@@ -93,5 +94,19 @@ class ReservaServiceImplTest {
 	     Reserva reservaSalva = reservaService.save(novaReserva);
 
 	     assertNotNull(reservaSalva);
+	 }
+	 
+	 @Test
+	 void deveLancarExcecaoQuandoHoraInicialForMaiorQueHoraFinal() {
+
+	     Reserva reserva = new Reserva();
+
+	     reserva.setHoraInicio(LocalTime.of(10, 0));
+	     reserva.setHoraFim(LocalTime.of(9, 0));
+
+	     assertThrows(
+	         HorarioInvalidoException.class,
+	         () -> reservaService.save(reserva)
+	     );
 	 }
 }
