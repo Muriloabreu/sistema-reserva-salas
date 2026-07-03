@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.agenda_reuniao.exception.ReservaNaoEncontradaException;
 import com.app.agenda_reuniao.exception.ConflitoHorarioException;
+import com.app.agenda_reuniao.exception.HorarioInvalidoException;
 import com.app.agenda_reuniao.models.Reserva;
 import com.app.agenda_reuniao.repository.ReservaRepository;
 import com.app.agenda_reuniao.service.ReservaService;
@@ -29,6 +30,8 @@ public class ReservaServiceImpl implements ReservaService {
 	
 	@Override
 	public Reserva save(Reserva reserva) {
+		
+		validarConflitoHorario(reserva);
 		
 		validarConflitoHorario(reserva);
 		
@@ -76,7 +79,12 @@ public class ReservaServiceImpl implements ReservaService {
 	            .orElseThrow(() -> new ReservaNaoEncontradaException(id));
 	}
 
-	
+	private void validarHorario(Reserva reserva) {
+
+	    if (!reserva.getHoraInicio().isBefore(reserva.getHoraFim())) {
+	        throw new HorarioInvalidoException();
+	    }
+	}
 
 	
 
