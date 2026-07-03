@@ -30,4 +30,46 @@ public class Sala {
 
     private Boolean ativa;
 
+	public Long getId() {
+		return id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public Integer getCapacidade() {
+		return capacidade;
+	}
+
+	public String getLocalizacao() {
+		return localizacao;
+	}
+
+	public Boolean getAtiva() {
+		return ativa;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setCapacidade(Integer capacidade) {
+		this.capacidade = capacidade;
+	}
+
+	public void setLocalizacao(String localizacao) {
+		this.localizacao = localizacao;
+	}
+
+	public void setAtiva(Boolean ativa) {
+		this.ativa = ativa;
+	}
+    
+    
+
 }
