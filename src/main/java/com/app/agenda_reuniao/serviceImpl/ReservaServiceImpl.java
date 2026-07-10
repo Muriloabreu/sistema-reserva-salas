@@ -31,9 +31,10 @@ public class ReservaServiceImpl implements ReservaService {
 	@Override
 	public Reserva save(Reserva reserva) {
 		
-		validarConflitoHorario(reserva);
-		
 		validarHorario(reserva);
+		
+		validarConflitoHorario(reserva);		
+		
 		
 		return reservaRepository.save(reserva);
 	}
@@ -81,7 +82,14 @@ public class ReservaServiceImpl implements ReservaService {
 
 	private void validarHorario(Reserva reserva) {
 
-	    if (!reserva.getHoraInicio().isBefore(reserva.getHoraFim())) {
+		if (reserva.getHoraInicio() == null || reserva.getHoraFim() == null) {
+	        throw new HorarioInvalidoException();
+	    }
+
+	    boolean horarioInvalido =
+	            !reserva.getHoraInicio().isBefore(reserva.getHoraFim());
+
+	    if (horarioInvalido) {
 	        throw new HorarioInvalidoException();
 	    }
 	}
