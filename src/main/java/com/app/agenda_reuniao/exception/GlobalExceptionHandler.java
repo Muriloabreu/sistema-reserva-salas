@@ -59,6 +59,21 @@ public class GlobalExceptionHandler {
 	            .status(HttpStatus.NOT_FOUND)
 	            .body(erro);
 	}
+	
+	@ExceptionHandler(HorarioInvalidoException.class)
+	public ResponseEntity<ErroResponse> tratarHorarioInvalido(
+	        HorarioInvalidoException ex) {
+
+	    ErroResponse erro = new ErroResponse(
+	            LocalDateTime.now(),
+	            HttpStatus.BAD_REQUEST.value(),
+	            ex.getMessage()
+	    );
+
+	    return ResponseEntity
+	            .status(HttpStatus.BAD_REQUEST)
+	            .body(erro);
+	}
     
     
 
