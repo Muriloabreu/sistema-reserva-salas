@@ -109,4 +109,17 @@ class ReservaServiceImplTest {
 	         () -> reservaService.save(reserva)
 	     );
 	 }
+	 @Test
+	 void deveLancarExcecaoQuandoHoraInicialForIgualAHoraFinal() {
+
+	     Reserva reserva = new Reserva();
+
+	     reserva.setHoraInicio(LocalTime.of(9, 0));
+	     reserva.setHoraFim(LocalTime.of(9, 0));
+
+	     assertThrows(
+	             HorarioInvalidoException.class,
+	             () -> reservaService.save(reserva)
+	     );
+	 }
 }
