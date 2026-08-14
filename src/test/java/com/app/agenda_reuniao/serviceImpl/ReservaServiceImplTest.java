@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.app.agenda_reuniao.exception.ConflitoHorarioException;
+import com.app.agenda_reuniao.exception.DataReservaInvalidaException;
 import com.app.agenda_reuniao.exception.HorarioInvalidoException;
 import com.app.agenda_reuniao.models.Reserva;
 import com.app.agenda_reuniao.models.Sala;
@@ -122,4 +123,28 @@ class ReservaServiceImplTest {
 	             () -> reservaService.save(reserva)
 	     );
 	 }
+
+	 @Test
+	 void deveLancarExcecaoQuandoDataForPassada() {
+
+	     Reserva reserva = new Reserva();
+
+	     reserva.setData(LocalDate.now().minusDays(1));
+
+	     assertThrows(
+	             DataReservaInvalidaException.class,
+	             () -> reservaService.save(reserva)
+	     );
+	 }
+	 
+	 @Test
+	 void deveAceitarReservaComDataAtualOuFutura() {
+	     // depois vamos montar esse teste completo
+	 }
+
+
+
+
+
+
 }

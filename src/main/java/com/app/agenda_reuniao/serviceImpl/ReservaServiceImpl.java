@@ -1,12 +1,14 @@
 package com.app.agenda_reuniao.serviceImpl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.app.agenda_reuniao.exception.ReservaNaoEncontradaException;
 import com.app.agenda_reuniao.exception.ConflitoHorarioException;
+import com.app.agenda_reuniao.exception.DataReservaInvalidaException;
 import com.app.agenda_reuniao.exception.HorarioInvalidoException;
+import com.app.agenda_reuniao.exception.ReservaNaoEncontradaException;
 import com.app.agenda_reuniao.models.Reserva;
 import com.app.agenda_reuniao.repository.ReservaRepository;
 import com.app.agenda_reuniao.service.ReservaService;
@@ -30,6 +32,8 @@ public class ReservaServiceImpl implements ReservaService {
 	
 	@Override
 	public Reserva save(Reserva reserva) {
+		
+		validarData(reserva);
 		
 		validarHorario(reserva);
 		
@@ -65,6 +69,16 @@ public class ReservaServiceImpl implements ReservaService {
 	        if (existeConflito) {
 	            throw new ConflitoHorarioException();
 	        }
+	    }
+	}
+	private void validarData(Reserva reserva) {
+
+	    if (reserva.getData() == null) {
+	        throw new DataReservaInvalidaException();
+	    }
+
+	    if (reserva.getData().isBefore(LocalDate.now())) {
+	        throw new DataReservaInvalidaException();
 	    }
 	}
 
